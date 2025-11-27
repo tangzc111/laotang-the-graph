@@ -1,7 +1,7 @@
 {
   "sepolia": {
     "MyLogger": {
-      "address": "0xf8e81D47203A594245E36C48e151709F0C19fBe8",
+      "address": "0x711c33E504066a40B2E0666d37895E60078363a6",
       "startBlock": 0
     }
   }
