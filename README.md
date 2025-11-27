@@ -21,6 +21,3 @@ graph deploy laotang-the-graph
 ## Schema 与 mapping
 - Schema：`schema.graphql` 定义 `DataStored`，字段包含 sender、message、timestamp 以及区块/交易元数据。
 - Mapping：`src/my-logger.ts` 处理 `DataStored` 事件，使用 `txHash + logIndex` 作为实体 ID 保存。
-
-## 注意事项
-- 若知道合约部署块高，可在 `subgraph.yaml` 与 `networks.json` 调整 `startBlock` 以加快同步。
