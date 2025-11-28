@@ -8,7 +8,7 @@ dataSources:
     name: RedEnvelope
     network: sepolia
     source:
-      address: "0x0000000000000000000000000000000000000000"
+      address: "0x2D4Bb1e8A16b7454748B2Ba5c74ff489fAb4dfE8"
       abi: RedEnvelope
       startBlock: 0
     mapping:
