@@ -1,6 +1,6 @@
-# laotang-the-graph
+# laotang-the-graph (RedEnvelope)
 
-Sepolia 上 `MyLogger` 合约的 Subgraph。索引事件 `DataStored(indexed address sender, string message, uint256 timestamp)`，并以 `DataStored` 实体存储（见 `schema.graphql`）。
+Sepolia 上 `RedEnvelope` 合约的 Subgraph。索引红包的创建、领取、回收事件，存储 `Envelope`、`Claim`、`Reclaim` 实体（见 `schema.graphql`）。
 
 ## 快速开始
 ```bash
@@ -14,10 +14,16 @@ graph deploy laotang-the-graph
 
 ## 地址信息
 - 网络：`sepolia`
-- MyLogger 合约：`0x711c33E504066a40B2E0666d37895E60078363a6`
-- ABI：`./abis/MyLogger.json`
+- RedEnvelope 合约：`0x2D4Bb1e8A16b7454748B2Ba5c74ff489fAb4dfE8`
+- ABI：`./abis/RedEnvelope.json`
 - 数据源配置：`subgraph.yaml`
 
 ## Schema 与 mapping
-- Schema：`schema.graphql` 定义 `DataStored`，字段包含 sender、message、timestamp 以及区块/交易元数据。
-- Mapping：`src/my-logger.ts` 处理 `DataStored` 事件，使用 `txHash + logIndex` 作为实体 ID 保存。
+- Schema：`schema.graphql` 定义
+  - `Envelope`：红包状态、剩余份额/金额、创建信息
+  - `Claim`：每次领取记录（不可变）
+  - `Reclaim`：过期回收记录（不可变）
+- Mapping：`src/red-envelope.ts` 处理事件
+  - `handleEnvelopeCreated` 建立红包
+  - `handleEnvelopeClaimed` 更新剩余份额/金额，记录领取
+  - `handleEnvelopeReclaimed` 标记回收并记录
