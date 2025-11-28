@@ -5,22 +5,28 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: MyLogger
+    name: RedEnvelope
     network: sepolia
     source:
-      address: "0x711c33E504066a40B2E0666d37895E60078363a6"
-      abi: MyLogger
+      address: "0x0000000000000000000000000000000000000000"
+      abi: RedEnvelope
       startBlock: 0
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.9
       language: wasm/assemblyscript
       entities:
-        - DataStored
+        - Envelope
+        - Claim
+        - Reclaim
       abis:
-        - name: MyLogger
-          file: ./abis/MyLogger.json
+        - name: RedEnvelope
+          file: ./abis/RedEnvelope.json
       eventHandlers:
-        - event: DataStored(indexed address,string,uint256)
-          handler: handleDataStored
-      file: ./src/my-logger.ts
+        - event: EnvelopeCreated(indexed uint256,indexed address,uint256,uint8,bool,uint256)
+          handler: handleEnvelopeCreated
+        - event: EnvelopeClaimed(indexed uint256,indexed address,uint256,uint8,uint256)
+          handler: handleEnvelopeClaimed
+        - event: EnvelopeReclaimed(indexed uint256,indexed address,uint256)
+          handler: handleEnvelopeReclaimed
+      file: ./src/red-envelope.ts

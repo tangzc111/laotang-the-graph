@@ -1,8 +1,36 @@
-type DataStored @entity(immutable: true) {
-  id: Bytes!
-  sender: Bytes! # address
-  message: String! # string
-  timestamp: BigInt! # uint256
+type Envelope @entity(immutable: false) {
+  id: ID!
+  creator: Bytes! # address
+  totalAmount: BigInt! # uint256
+  remainingAmount: BigInt! # uint256
+  totalSlots: Int! # uint8
+  remainingSlots: Int! # uint8
+  equalShare: Boolean!
+  createdAt: BigInt! # uint256
+  reclaimed: Boolean!
+  claimedCount: Int!
+  createdTxHash: Bytes!
+  createdBlockNumber: BigInt!
+  createdBlockTimestamp: BigInt!
+}
+
+type Claim @entity(immutable: true) {
+  id: ID!
+  envelope: Envelope!
+  claimer: Bytes! # address
+  amount: BigInt! # uint256
+  remainingSlots: Int! # uint8
+  remainingAmount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Reclaim @entity(immutable: true) {
+  id: ID!
+  envelope: Envelope!
+  creator: Bytes! # address
+  amount: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
